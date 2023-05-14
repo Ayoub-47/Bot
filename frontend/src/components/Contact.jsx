@@ -29,21 +29,7 @@ const create_contacts = (contacts) => {
   );
 };
 
-function Contact({ updateVisibility }) {
-  const [contacts, setContacts] = useState([
-    {
-      avatar: undefined,
-      name: "Touahria Yacine",
-      last_message: "How are you?",
-      time: "09:00",
-    },
-    {
-      avatar: undefined,
-      name: "Touahria Yacine",
-      last_message: "How are you?",
-      time: "09:01",
-    },
-  ]);
+function Contact({ updateVisibility , contactList}) {
 
   return (
     <div id="contacts">
@@ -52,7 +38,7 @@ function Contact({ updateVisibility }) {
           <img src={plusIcon} alt="" />
         </button>
       </div>
-      {create_contacts(contacts)}
+      {create_contacts(contactList)}
     </div>
   );
 }

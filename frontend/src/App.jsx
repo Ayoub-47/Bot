@@ -13,10 +13,37 @@ function App() {
   const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [profiles, setProfiles] = useState([]);
+  const [contacts, setContacts] = useState([
+    {
+      avatar: undefined,
+      name: "Touahria Yacine",
+      last_message: "How are you?",
+      time: "09:00",
+    },
+    {
+      avatar: undefined,
+      name: "Touahria Yacine",
+      last_message: "How are you?",
+      time: "09:01",
+    }
+  ]);
 
   const updateVisibility = () => {
     setFormVisibility(() => !formVisibility);
   };
+
+  const handleNewProfile = (userName, description) =>{
+    const newProfile = {userName, description};
+    let profs = profiles;
+    profs.push(newProfile);
+    setProfiles(profs);
+
+    let contList = contacts;
+    contList.push({avatar: undefined, name: userName, last_message:"No last msg", time: "09:00" });
+    setContacts(contList);
+    
+  }
 
   const chat = async (e, message) => {
     e.preventDefault();
@@ -53,7 +80,7 @@ function App() {
 
   return (
     <div id="app-container">
-      {formVisibility && <Form updateVisibility={updateVisibility}></Form>}
+      {formVisibility && <Form updateVisibility={updateVisibility} handleNewProfile = {handleNewProfile}></Form>}
       <NavBar></NavBar>
       <div id="main">
         <div id="search-bar">
@@ -62,17 +89,17 @@ function App() {
           </div>
           <input type="text" placeholder="search" />
         </div>
-        <Contact updateVisibility={updateVisibility}></Contact>
+        <Contact updateVisibility={updateVisibility} contactList={contacts}></Contact>
         <div id="chat-container">
           <div id="chats">
             <Messages msgList={chats} ></Messages>
           </div>
           <div id="tools">
-            <form id="chat-bar" onSubmit={(e)=> chat(e, message)}>
+            <div id="chat-bar" >
               <img src={smileIcon} alt="" id="emoji" />
               <input type="text" placeholder="Type a message" value={message} onChange={(e) => setMessage(e.target.value)} />
               <img src={fileIcon} alt="" id="add-file" />
-            </form>
+            </div>
             <div id="send-btn" onClick={(e)=> chat(e, message)}>
               <img src={sendIcon} alt="" />
             </div>
